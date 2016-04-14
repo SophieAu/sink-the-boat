@@ -86,12 +86,12 @@ void keyboard(unsigned char key, int x, int y){//x and y are the position of the
 		//in- and decrease segment number
 		case '+':
 		globalSegments += 5;
-		// resetSegments(globalSegments);
+		resetSegments(globalSegments);
 		glutSwapBuffers();
 		break;
 		case '-':
 		globalSegments -= 5;
-		// resetSegments(globalSegments);
+		resetSegments(globalSegments);
 		glutSwapBuffers();
 		break;
 
