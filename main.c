@@ -46,7 +46,6 @@ void drawAxis(float length){
 void init(){
 	globalSegments = 50;
 	waterInit(globalSegments);
-	boatInit(globalSegments);
 }
 
 void animationSpeed(){
@@ -100,7 +99,7 @@ void keyboard(unsigned char key, int x, int y){//x and y are the position of the
 		staticTime = time.t;
 		break;
 
-		case 'w':
+		case 'p':
 		toggleWireFrame();
 		glutSwapBuffers();
 		break;
@@ -111,6 +110,38 @@ void keyboard(unsigned char key, int x, int y){//x and y are the position of the
 		case 't':
 		toggleTangent();
 		glutSwapBuffers();
+		break;
+
+		case 'w':
+		turnLeftCannonLeft();
+		break;
+		case 'a':
+		moveLeftBoatLeft();
+		break;
+		case 's':
+		turnLeftCannonRight();
+		case 'd':
+		moveLeftBoatRight();
+		break;
+
+		default:
+		break;
+	}
+}
+
+void arrowKeys(int key, int x, int y){
+	switch(key){
+		case GLUT_KEY_LEFT:
+		moveRightBoatLeft();
+		break;
+		case GLUT_KEY_UP:
+		turnRightCannonRight();
+		break;
+		case GLUT_KEY_RIGHT: 
+		moveRightBoatRight();
+		break;
+		case GLUT_KEY_DOWN:
+		turnRightCannonLeft();
 		break;
 
 		default:
@@ -127,6 +158,7 @@ int main(int argc, char **argv){
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
 	glutKeyboardFunc(keyboard);
+	glutSpecialFunc(arrowKeys);
 	init();
 
 	glutMainLoop();
