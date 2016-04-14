@@ -6,4 +6,4 @@ extern void toggleNormal();
 extern void toggleTangent();
 
 extern float getSineY(float x);
-extern void drawWater(float globalTime)
+extern void drawWater(float globalTime);
