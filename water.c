@@ -18,7 +18,7 @@ int booleans[nBools] = { 0, 0, 0};
 
 float time = 0.0;
 
-typedef struct { float leftBorder, rightBorder, range, stepSize, amplitude,
+typedef struct { float leftBorder, rightBorder, range, stepSize, amplitude;
 	int segments;
 	}SineWave;
 SineWave sine;
