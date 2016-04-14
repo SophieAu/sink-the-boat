@@ -30,7 +30,7 @@ void waterInit(int globalSegments){
 	sine.leftBorder = -1.0;
 	sine.rightBorder = 1.0;
 	sine.range = abs(sine.leftBorder) + abs(sine.rightBorder);
-	sine.amplitude = 0.4;
+	sine.amplitude = 0.2;
 	resetSegments(globalSegments);
 }
 

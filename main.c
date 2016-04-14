@@ -61,7 +61,7 @@ void display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glPushMatrix();
-	drawAxis(0.5);
+	drawAxis(1);
 	drawWater(time.t);
 	drawBoatLeft(getSineY(getLeftBoatX()), getSineDY(getLeftBoatX()));
 	drawBoatRight(getSineY(getRightBoatX()), getSineDY(getRightBoatX()));
