@@ -18,16 +18,16 @@ void boatInit(int segments){
 	increment[hullRight] = 2/segments;
 }
 
-void drawBoat(float y, float angle, Joint hull){
+void drawBoat(float y, float angle, Joint hull, int r, int g, int b){
 	angle = atan(angle)*180/PI;
 	
-	glColor3f(1, 1, 1);
+	glColor3f(r, g, b);
 	glTranslatef(jointPositions[hull], y, 0.0);
 	glRotatef(angle, 0, 0, 1.0);
 	glScalef(0.1, 0.1, 0.1);
 
 	//Hull
-	glBegin(GL_LINE_LOOP);
+	glBegin(GL_POLYGON);
     glVertex3f(-0.5, -0.25, 0);
     glVertex3f(0.5, -0.25, 0);
     glVertex3f(1.0, 0.25, 0);
@@ -37,7 +37,7 @@ void drawBoat(float y, float angle, Joint hull){
 	//Bridge
 	glPushMatrix();
     glTranslatef(0.0, 0.5, 0.0);
-    glBegin(GL_LINE_LOOP);
+    glBegin(GL_POLYGON);
     glVertex3f(-0.25, -0.25, 0);
     glVertex3f(0.25, -0.25, 0);
     glVertex3f(0.25, 0.25, 0);
@@ -48,7 +48,7 @@ void drawBoat(float y, float angle, Joint hull){
 
 void drawCannon(Joint cannon){
     glRotatef(jointPositions[cannon], 0.0, 0.0, 1.0);
-	glBegin(GL_LINE_LOOP);
+	glBegin(GL_POLYGON);
 	glVertex3f(-0.1, -0.25, 0);
     glVertex3f(0.1, -0.25, 0);
     glVertex3f(0.1, 0.25, 0);
@@ -60,7 +60,7 @@ void drawCannon(Joint cannon){
 
 void drawBoatLeft(float y, float angle){
 	glPushMatrix();
-	drawBoat(y, angle, hullLeft);
+	drawBoat(y, angle, hullLeft, 0, 0, 1);
 
 	//Draw Cannon
 	glPushMatrix();
@@ -73,7 +73,7 @@ void drawBoatLeft(float y, float angle){
 
 void drawBoatRight(float y, float angle){
 	glPushMatrix();
-	drawBoat(y, angle, hullRight);
+	drawBoat(y, angle, hullRight, 0, 1, 0);
 
 	//Draw Cannon
 	glPushMatrix();
