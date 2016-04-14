@@ -13,13 +13,13 @@
 //#include "boat.h"
 
 
+int globalSegments = 0;
+
 typedef struct { float t, deltat, previoust;
     } Time;
 Time time;
 float staticTime = 0.0;
 float waitTime = 0.0;
-
-int globalSegments = 0;
 
 int animationBool = 0;
 
