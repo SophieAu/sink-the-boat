@@ -62,9 +62,9 @@ void display(){
 
 	glPushMatrix();
 	drawAxis(1);
-	drawWater(time.t);
 	drawBoatLeft(getSineY(getLeftBoatX()), getSineDY(getLeftBoatX()));
 	drawBoatRight(getSineY(getRightBoatX()), getSineDY(getRightBoatX()));
+	drawWater(time.t);
 	glPopMatrix();
 
 	glutSwapBuffers();
