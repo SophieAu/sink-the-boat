@@ -15,3 +15,6 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+# Override language detection for water.h (GitHub thinks it's C++)
+water.h linguist-language=C
