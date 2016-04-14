@@ -101,15 +101,15 @@ void keyboard(unsigned char key, int x, int y){//x and y are the position of the
 		break;
 
 		case 'w':
-		// toggleWireFrame();
+		toggleWireFrame();
 		glutSwapBuffers();
 		break;
 		case 'n':
-		// toggleNormal();
+		toggleNormal();
 		glutSwapBuffers();
 		break;
 		case 't':
-		// toggleTangent();
+		toggleTangent();
 		glutSwapBuffers();
 		break;
 
