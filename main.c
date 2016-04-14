@@ -10,7 +10,7 @@
 
 //Own Libs
 #include "water.h"
-//#include "boat.h"
+#include "boat.h"
 
 
 int globalSegments = 0;
@@ -46,7 +46,7 @@ void drawAxis(float length){
 void init(){
 	globalSegments = 50;
 	waterInit(globalSegments);
-	// boatInit(globalSegments);
+	boatInit(globalSegments);
 }
 
 void animationSpeed(){
@@ -63,8 +63,8 @@ void display(){
 	glPushMatrix();
 	drawAxis(0.5);
 	drawWater(time.t);
-	// printf("tempY: %f\n", getSineY(getBoatX()); //DEBUG
-	// drawBoatLeft(getSineY(getBoatX());
+	drawBoatLeft(getSineY(getLeftBoatX()));
+	drawBoatRight(getSineY(getRightBoatX()));
 	glPopMatrix();
 
 	glutSwapBuffers();
