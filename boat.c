@@ -1,9 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
+
+#define PI 3.141592653589
 
 typedef enum { hullLeft, cannonLeft, hullRight, cannonRight, nJoints } Joint;
 float increment[nJoints] = {0.1, 1.0, 0.1, 1.0};
@@ -15,9 +18,12 @@ void boatInit(int segments){
 	increment[hullRight] = 2/segments;
 }
 
-void drawBoat(float y, Joint hull){
+void drawBoat(float y, float angle, Joint hull){
+	angle = atan(angle)*180/PI;
+	
 	glColor3f(1, 1, 1);
 	glTranslatef(jointPositions[hull], y, 0.0);
+	glRotatef(angle, 0, 0, 1.0);
 	glScalef(0.1, 0.1, 0.1);
 
 	//Hull
@@ -52,9 +58,9 @@ void drawCannon(Joint cannon){
 
 
 
-void drawBoatLeft(float y){
+void drawBoatLeft(float y, float angle){
 	glPushMatrix();
-	drawBoat(y, hullLeft);
+	drawBoat(y, angle, hullLeft);
 
 	//Draw Cannon
 	glPushMatrix();
@@ -65,9 +71,9 @@ void drawBoatLeft(float y){
 	glPopMatrix();
 }
 
-void drawBoatRight(float y){
+void drawBoatRight(float y, float angle){
 	glPushMatrix();
-	drawBoat(y, hullRight);
+	drawBoat(y, angle, hullRight);
 
 	//Draw Cannon
 	glPushMatrix();

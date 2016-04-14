@@ -7,8 +7,6 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
-//#include "water.h"
-
 #define PI 3.141592653589
 const double omega = PI/4;
 const double k = 2*PI / 0.5;
@@ -32,7 +30,7 @@ void waterInit(int globalSegments){
 	sine.leftBorder = -1.0;
 	sine.rightBorder = 1.0;
 	sine.range = abs(sine.leftBorder) + abs(sine.rightBorder);
-	sine.amplitude = 0.5;
+	sine.amplitude = 0.4;
 	resetSegments(globalSegments);
 }
 
@@ -52,11 +50,16 @@ float getSineY(float x){
 	return sine.amplitude * sinf(k * x + omega * time);
 }
 
+float getSineDY(float x){
+	return k * sine.amplitude * cosf(k * x + omega * time);
+}
+
 void drawNormalsAndTangents(){
 	for(int i = 0; i <= sine.segments; i++){
         float x = sine.leftBorder + i * sine.stepSize;
+        float y = getSineY(x);
         float dx = 1;
-		float dy = k * sine.amplitude * cosf(k * x + omega * time);
+        float dy = getSineDY(x);
 
 		float vLength = sqrt(pow(dx, 2) + pow(dy, 2));
 		dx /= vLength * 8;
@@ -65,16 +68,16 @@ void drawNormalsAndTangents(){
 		if (booleans[tangent] % 2 == 1){
     		glColor3f(0, 1, 0);
 	 		glBegin(GL_LINES);
- 			glVertex3f(x, getSineY(x), 0);
-			glVertex3f(x + dx, getSineY(x) + dy, 0);
+ 			glVertex3f(x, y, 0);
+			glVertex3f(x + dx, y + dy, 0);
      		glEnd();
 		}
 
 		if (booleans[normal] % 2 == 1){
 	 		glColor3f(1, 0, 0);
 	 		glBegin(GL_LINES);
-	 		glVertex3f(x, getSineY(x), 0);
-			glVertex3f(x - dy, getSineY(x) + dx, 0);
+	 		glVertex3f(x, y, 0);
+			glVertex3f(x - dy, y + dx, 0);
  			glEnd();
  		}
  	}
