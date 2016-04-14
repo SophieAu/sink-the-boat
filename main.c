@@ -114,14 +114,18 @@ void keyboard(unsigned char key, int x, int y){//x and y are the position of the
 
 		case 'w':
 		turnLeftCannonLeft();
+		glutSwapBuffers();
 		break;
 		case 'a':
 		moveLeftBoatLeft();
+		glutSwapBuffers();
 		break;
 		case 's':
 		turnLeftCannonRight();
+		glutSwapBuffers();
 		case 'd':
 		moveLeftBoatRight();
+		glutSwapBuffers();
 		break;
 
 		default:
@@ -133,15 +137,19 @@ void arrowKeys(int key, int x, int y){
 	switch(key){
 		case GLUT_KEY_LEFT:
 		moveRightBoatLeft();
+		glutSwapBuffers();
 		break;
 		case GLUT_KEY_UP:
 		turnRightCannonRight();
+		glutSwapBuffers();
 		break;
 		case GLUT_KEY_RIGHT: 
 		moveRightBoatRight();
+		glutSwapBuffers();
 		break;
 		case GLUT_KEY_DOWN:
 		turnRightCannonLeft();
+		glutSwapBuffers();
 		break;
 
 		default:
