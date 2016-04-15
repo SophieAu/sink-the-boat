@@ -12,7 +12,7 @@ const double omega = PI/4;
 const double k = 2*PI / 0.5;
 
 enum { wireFrame, tangent, normal, nBools } Bools;
-int booleans[nBools] = { 0, 0, 0};
+int booleans[nBools] = { 0, 0, 0 };
 
 float time = 0.0;
 

@@ -88,6 +88,8 @@ float getRightBoatX(){
 	return jointPositions[hullRight];
 }
 
+
+//Methods for key-press actions
 void turnLeftCannonRight(){
 	jointPositions[cannonLeft] += increment[cannonLeft];
 	if (jointPositions[cannonLeft] > 90)
@@ -141,5 +143,5 @@ void shootLeftBoat(){
 }
 
 void shootRightBoat(){
-	
+
 }
