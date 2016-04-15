@@ -5,7 +5,7 @@ This program was coded on a Windows machine. Therefore, the makefile will compil
 
 
 ----------Missing Functionality:
-All functionality required for a DI or higher.
+All functionality required for a DI or higher. Cannons do not shoot. Pressing the designated keys calls the "starter functions" but these functions are empty.
 
 
 ----------Known Bugs:
