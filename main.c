@@ -125,9 +125,24 @@ void keyboard(unsigned char key, int x, int y){//x and y are the position of the
 		case 's':
 		turnLeftCannonRight();
 		glutSwapBuffers();
+		break;
 		case 'd':
 		moveLeftBoatRight();
 		glutSwapBuffers();
+		break;
+
+		case 32:
+		shootLeftBoat();
+		break;
+		case 13:
+		shootRightBoat();
+		break;
+
+		case'q':
+		exit(0);
+		break;
+		case 27:
+		exit(0);
 		break;
 
 		default:
