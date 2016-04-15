@@ -1,0 +1,18 @@
+COSC1186 Interactive 3D Graphics and Animation Assignment 1 - Solvejg Au s3579664
+
+----------IMPORTANT NOTE:
+This program was coded on a Windows machine. Therefore, the makefile will compile for Windows by default. To compile for Linnux, simply use the keyword 'linux'
+
+
+----------Missing Functionality:
+All functionality required for a DI or higher. Cannons do not shoot. Pressing the designated keys calls the "starter functions" but these functions are empty.
+
+
+----------Known Bugs:
+When two keys are pressed at the same time, only the key that was pressed last will be registered by the program. This can (/ should be possible to) be solved by saving the pressed keys into an array and then running the saved elements through the switch-case routine.
+
+
+----------References:
+Most of the was written by referencing the lecture and tutorial notes as well as the sample code provided by Mr. Leach, to be found at http://goanna.cs.rmit.edu.au/~gl/teaching/Interactive3D/index.xhtml
+
+Additional ressources are the Docs for both OpenGL (https://www.opengl.org/sdk/docs/man2/xhtml/) and GLUT (https://www.opengl.org/documentation/specs/glut/spec3/spec3.html) as well as lecture notes from my C class taken at my home university Hochschule Hannover, lectured by Prof. Holger Peine.

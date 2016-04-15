@@ -88,34 +88,60 @@ float getRightBoatX(){
 	return jointPositions[hullRight];
 }
 
+
+//Methods for key-press actions
 void turnLeftCannonRight(){
 	jointPositions[cannonLeft] += increment[cannonLeft];
+	if (jointPositions[cannonLeft] > 90)
+		jointPositions[cannonLeft] = 90;
 }
 
 void turnLeftCannonLeft(){
 	jointPositions[cannonLeft] -= increment[cannonLeft];
+	if (jointPositions[cannonLeft] < -90)
+		jointPositions[cannonLeft] = -90;
 }
 
 void moveLeftBoatRight(){
 	jointPositions[hullLeft] += increment[hullLeft];
+	if (jointPositions[hullLeft] > 1)
+		jointPositions[hullLeft] = 1;
 }
 
 void moveLeftBoatLeft(){
 	jointPositions[hullLeft] -= increment[hullLeft];
+	if (jointPositions[hullLeft] < -1)
+		jointPositions[hullLeft] = -1;
 }
 
 void turnRightCannonRight(){
 	jointPositions[cannonRight] += increment[cannonRight];
+	if (jointPositions[cannonRight] < -90)
+		jointPositions[cannonRight] = -90;
 }
 
 void turnRightCannonLeft(){
 	jointPositions[cannonRight] -= increment[cannonRight];
+	if (jointPositions[cannonRight] > 90)
+		jointPositions[cannonRight] = 90;
 }
 
 void moveRightBoatRight(){
 	jointPositions[hullRight] += increment[hullRight];
+	if (jointPositions[hullRight] > 1)
+		jointPositions[hullRight] = 1;
 }
 
 void moveRightBoatLeft(){
 	jointPositions[hullRight] -= increment[hullRight];
+	if (jointPositions[hullRight] < -1)
+		jointPositions[hullRight] = -1;
+}
+
+void shootLeftBoat(){
+
+}
+
+void shootRightBoat(){
+
 }
