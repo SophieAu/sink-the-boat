@@ -135,3 +135,11 @@ void moveRightBoatLeft(){
 	if (jointPositions[hullRight] < -1)
 		jointPositions[hullRight] = -1;
 }
+
+void shootLeftBoat(){
+
+}
+
+void shootRightBoat(){
+	
+}

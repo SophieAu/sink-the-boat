@@ -13,3 +13,6 @@ extern void turnRightCannonRight();
 extern void turnRightCannonLeft();
 extern void moveRightBoatRight();
 extern void moveRightBoatLeft();
+
+extern void shootLeftBoat();
+extern void shootRightBoat();
