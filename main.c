@@ -90,6 +90,8 @@ void keyboard(unsigned char key, int x, int y){//x and y are the position of the
 		break;
 		case '-':
 		globalSegments -= 5;
+		if(globalSegments < 4)
+			globalSegments = 4;
 		resetSegments(globalSegments);
 		glutSwapBuffers();
 		break;
