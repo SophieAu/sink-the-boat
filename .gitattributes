@@ -16,5 +16,5 @@
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
 
-# Override language detection for water.h (GitHub thinks it's C++)
+# Override language detection for my header files (GitHub thinks it's C++)
 *.h linguist-language=C
