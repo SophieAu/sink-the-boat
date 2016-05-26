@@ -16,10 +16,12 @@
 
 
 void drawAxis(float length){
+
+
 	glBegin(GL_LINES);
     // X
-    glColor3f(1, 0, 0);
-    glVertex3f(0, 0, 0);
+   glColor3f(1, 0, 0);
+   glVertex3f(0, 0, 0);
     glVertex3f(length, 0, 0);
     //Y
     glColor3f(0, 1, 0);
@@ -49,10 +51,15 @@ void display(){
 
 	glPushMatrix();
 	turnWorld();
+	
 	drawAxis(1);
 	drawBoatLeft(getSineY(getLeftBoatX()), getSineDY(getLeftBoatX()));
 	drawBoatRight(getSineY(getRightBoatX()), getSineDY(getRightBoatX()));
+
+	glPushMatrix();
 	drawWater();
+	glPopMatrix();
+	
 	glPopMatrix();
 
 	glutSwapBuffers();

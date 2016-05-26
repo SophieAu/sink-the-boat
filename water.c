@@ -92,14 +92,38 @@ void drawNormalsAndTangents(){
  	}
 }
 
+void lighting(){
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_NORMALIZE);
+    
+    //this lighting combination keeps the requested cyan but makes it a bit darker and bluer
+    GLfloat light_position[] = {1.0f, 0.8f, 0.0f, 0.7f};
+	GLfloat light_ambient[] = {-0.1f, 0.1f, 0.1f, -0.5f};
+	GLfloat light_diffuse[] = {0.5f, 0.5f, 1.0f, 0.1f}; // the green is dampened, making the water blue-er
+
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+}
+
+
+
 void drawWater(){
 	if (booleans[wireFrame] % 2 == 1)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     
-    glEnable(GL_BLEND);
-    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+ 	lighting();
+
+	GLfloat cyan[] = {0.0f, 1.8f, 1.8f, 1.0f};
+	glMaterialfv(GL_FRONT, GL_AMBIENT, cyan);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, cyan);
+	
+
+	glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glColor4f(0, 1, 1, 0.5);
 
     for(int i = 0; i <= sine.segments; i++){
@@ -112,11 +136,15 @@ void drawWater(){
 
         for(int j = sine.segments; j >= 0; j--){
         	float z = sine.leftBorder + j * sine.stepSize;
+        	glNormal3f(1.0, getSineDY(leftX), 0.0);
 			glVertex3f(leftX, leftSineY, z);
-        	glVertex3f(rightX, rightSineY, z);
+        	glNormal3f(1.0, getSineDY(rightX), 0.0);
+			glVertex3f(rightX, rightSineY, z);
 		}
 	glEnd();
 	}
     
+	glDisable(GL_LIGHTING);
+	glDisable(GL_BLEND);
     drawNormalsAndTangents();
 }
