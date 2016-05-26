@@ -35,14 +35,13 @@ void drawAxis(float length){
 
 void init(){
 	globalSegments = 50;
-	waterInit(globalSegments);
+	waterInit();
 }
 
 void turnWorld(){
 	glRotatef(45, 1.0, 0, 0);
 	glRotatef(-45, 0, 1.0, 0);	
 }
-
 
 void display(){
 	int errorCode;

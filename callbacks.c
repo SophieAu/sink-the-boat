@@ -35,20 +35,19 @@ void idle(){
 
 
 
-
 void keyboard(unsigned char key, int x, int y){//x and y are the position of the mouse when key was pressed
 	switch(key){
 		//in- and decrease segment number
 		case '+':
 		globalSegments *= 2;
-		resetSegments(globalSegments);
+		resetSegments();
 		glutSwapBuffers();
 		break;
 		case '-':
 		globalSegments /= 2;
 		if(globalSegments < 4) // using 4 as anything smaller doesn't make much sense
 			globalSegments = 4;
-		resetSegments(globalSegments);
+		resetSegments();
 		glutSwapBuffers();
 		break;
 

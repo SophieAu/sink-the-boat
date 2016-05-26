@@ -1,5 +1,5 @@
-extern void resetSegments(int globalSegments);
-extern void waterInit(int globalSegments);
+extern void resetSegments();
+extern void waterInit();
 
 extern void toggleWireFrame();
 extern void toggleNormal();

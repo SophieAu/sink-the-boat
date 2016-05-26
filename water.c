@@ -22,17 +22,17 @@ typedef struct { float leftBorder, rightBorder, range, stepSize, amplitude;
 	}SineWave;
 SineWave sine;
 
-void resetSegments(int globalSegments){
+void resetSegments(){
 	sine.segments = globalSegments;
 	sine.stepSize = sine.range / sine.segments;
 }
 
-void waterInit(int globalSegments){
+void waterInit(){
 	sine.leftBorder = -1.0;
 	sine.rightBorder = 1.0;
 	sine.range = abs(sine.leftBorder) + abs(sine.rightBorder);
-	sine.amplitude = 0.2;
-	resetSegments(globalSegments);
+	sine.amplitude = 0.1;
+	resetSegments();
 }
 
 void toggleWireFrame(){
@@ -92,19 +92,23 @@ void drawWater(){
     
     glEnable(GL_BLEND);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glBegin(GL_QUAD_STRIP);
     glColor4f(0, 1, 1, 0.5);
 
-    //Fence post problem. Hence the 0th node outside the for loop
-    glVertex3f(sine.leftBorder, getSineY(sine.leftBorder), 0);
-    glVertex3f(sine.leftBorder, -1.0, 0);
+    for(int i = 0; i <= sine.segments; i++){
+	glBegin(GL_QUAD_STRIP);
 
-	for(int i = 1; i <= sine.segments; i++){
-        float x = sine.leftBorder + i * sine.stepSize;
-		glVertex3f(x, getSineY(x), 0);
-		glVertex3f(x, -1.0, 0);
-    }
-    glEnd();
+   		float leftX = sine.leftBorder + i * sine.stepSize;
+    	float leftSineY = getSineY(leftX);
+    	float rightX = sine.leftBorder + (i+1) * sine.stepSize;
+		float rightSineY = getSineY(rightX);
 
+        for(int j = sine.segments; j >= 0; j--){
+        	float z = sine.leftBorder + j * sine.stepSize;
+			glVertex3f(leftX, leftSineY, z);
+        	glVertex3f(rightX, rightSineY, z);
+		}
+	glEnd();
+	}
+    
     drawNormalsAndTangents();
 }
