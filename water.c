@@ -7,6 +7,8 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
+#include "globalvariables.h"
+
 #define PI 3.141592653589
 const double omega = PI/4;
 const double k = 2*PI / 0.5;
@@ -14,7 +16,6 @@ const double k = 2*PI / 0.5;
 enum { wireFrame, tangent, normal, nBools } Bools;
 int booleans[nBools] = { 0, 0, 0 };
 
-float time = 0.0;
 
 typedef struct { float leftBorder, rightBorder, range, stepSize, amplitude;
 	int segments;
@@ -47,11 +48,11 @@ void toggleTangent(){
 }
 
 float getSineY(float x){
-	return sine.amplitude * sinf(k * x + omega * time);
+	return sine.amplitude * sinf(k * x + omega * time.t);
 }
 
 float getSineDY(float x){
-	return k * sine.amplitude * cosf(k * x + omega * time);
+	return k * sine.amplitude * cosf(k * x + omega * time.t);
 }
 
 void drawNormalsAndTangents(){
@@ -83,8 +84,7 @@ void drawNormalsAndTangents(){
  	}
 }
 
-void drawWater(float globalTime){
-	time = globalTime;
+void drawWater(){
 	if (booleans[wireFrame] % 2 == 1)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else

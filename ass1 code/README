@@ -1,7 +1,7 @@
 COSC1186 Interactive 3D Graphics and Animation Assignment 1 - Solvejg Au s3579664
 
 ----------IMPORTANT NOTE:
-This program was coded on a Windows machine. Therefore, the makefile will compile for Windows by default. To compile for Linnux, simply use the keyword 'linux'
+This program was coded on a Windows machine. Therefore, the makefile will compile for Windows by default. To compile for Linux, simply use the keyword 'linux'
 
 
 ----------Missing Functionality:

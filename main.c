@@ -9,20 +9,10 @@
 #include <GL/glut.h>
 
 //Own Libs
+#include "callbacks.h"
 #include "water.h"
 #include "boat.h"
-
-
-int globalSegments = 0;
-
-typedef struct { float t, deltat, previoust;
-    } Time;
-Time time;
-float staticTime = 0.0;
-float waitTime = 0.0;
-
-int animationBool = 0;
-
+#include "globalvariables.h"
 
 
 void drawAxis(float length){
@@ -48,130 +38,27 @@ void init(){
 	waterInit(globalSegments);
 }
 
-void animationSpeed(){
-	time.t = glutGet(GLUT_ELAPSED_TIME) - waitTime;
-	time.t /= 1000.0; //convert from ms to s
-	time.deltat = time.t - time.previoust;
-	time.previoust = time.t;
+void turnWorld(){
+	glRotatef(45, 1.0, 0, 0);
+	glRotatef(-45, 0, 1.0, 0);	
 }
+
 
 void display(){
 	int errorCode;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glPushMatrix();
+	turnWorld();
 	drawAxis(1);
 	drawBoatLeft(getSineY(getLeftBoatX()), getSineDY(getLeftBoatX()));
 	drawBoatRight(getSineY(getRightBoatX()), getSineDY(getRightBoatX()));
-	drawWater(time.t);
+	drawWater();
 	glPopMatrix();
 
 	glutSwapBuffers();
 	if ((errorCode = glGetError()) != GL_NO_ERROR)
 		printf("display: %i %s\n",errorCode, gluErrorString(errorCode));
-}
-
-void idle(){
-	if (animationBool % 2 == 0)
-		animationSpeed();
-	else
-		waitTime = glutGet(GLUT_ELAPSED_TIME) - (staticTime*1000);
-	
-	glutPostRedisplay();
-}
-
-void keyboard(unsigned char key, int x, int y){//x and y are the position of the mouse when key was pressed
-	switch(key){
-		//in- and decrease segment number
-		case '+':
-		globalSegments += 5;
-		resetSegments(globalSegments);
-		glutSwapBuffers();
-		break;
-		case '-':
-		globalSegments -= 5;
-		if(globalSegments < 4)
-			globalSegments = 4;
-		resetSegments(globalSegments);
-		glutSwapBuffers();
-		break;
-
-		case '\'':
-		animationBool++;
-		staticTime = time.t;
-		break;
-
-		case 'p':
-		toggleWireFrame();
-		glutSwapBuffers();
-		break;
-		case 'n':
-		toggleNormal();
-		glutSwapBuffers();
-		break;
-		case 't':
-		toggleTangent();
-		glutSwapBuffers();
-		break;
-
-		case 'w':
-		turnLeftCannonLeft();
-		glutSwapBuffers();
-		break;
-		case 'a':
-		moveLeftBoatLeft();
-		glutSwapBuffers();
-		break;
-		case 's':
-		turnLeftCannonRight();
-		glutSwapBuffers();
-		break;
-		case 'd':
-		moveLeftBoatRight();
-		glutSwapBuffers();
-		break;
-
-		case 32:
-		shootLeftBoat();
-		break;
-		case 13:
-		shootRightBoat();
-		break;
-
-		case'q':
-		exit(0);
-		break;
-		case 27:
-		exit(0);
-		break;
-
-		default:
-		break;
-	}
-}
-
-void arrowKeys(int key, int x, int y){
-	switch(key){
-		case GLUT_KEY_LEFT:
-		moveRightBoatLeft();
-		glutSwapBuffers();
-		break;
-		case GLUT_KEY_UP:
-		turnRightCannonRight();
-		glutSwapBuffers();
-		break;
-		case GLUT_KEY_RIGHT: 
-		moveRightBoatRight();
-		glutSwapBuffers();
-		break;
-		case GLUT_KEY_DOWN:
-		turnRightCannonLeft();
-		glutSwapBuffers();
-		break;
-
-		default:
-		break;
-	}
 }
 
 int main(int argc, char **argv){
