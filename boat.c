@@ -11,13 +11,33 @@
 typedef enum { hullLeft, cannonLeft, hullRight, cannonRight, nJoints } Joint;
 float increment[nJoints] = {0.01, 1.0, 0.01, -1.0};
 float jointPositions[nJoints] = {-0.4, 0.0, 0.4, 0.0};
+int healthLeft = 10;
+int healthRight = 10;
 
 
+void turnBoatWorld(){
+	glRotatef(45, 1.0, 0, 0);	
+	glRotatef(-45, 0, 1.0, 0);
+}
 
-void drawBoat(float y, float angle, Joint hull, int r, int g, int b){
+void unturnBoatWorld(){
+	glRotatef(45, 0, 1.0, 0);
+	glRotatef(-45, 1.0, 0, 0);	
+}
+
+void drawHealth(float yOffset, int health){
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i<=health; i++){
+		float x = 0.05*i;
+		glVertex3f(-0.97 + x, 0.97 - yOffset, 1.0);
+   		glVertex3f(-0.97 + x, 0.92 - yOffset, 1.0);
+	}
+	glEnd();
+}
+
+void drawBoat(float y, float angle, Joint hull){
 	angle = atan(angle)*180/PI;
 	
-	glColor3f(r, g, b);
 	glTranslatef(jointPositions[hull], y, 0.0);
 	glRotatef(angle, 0, 0, 1.0);
 	glScalef(0.2, 0.2, 0.2);
@@ -56,7 +76,14 @@ void drawCannon(Joint cannon){
 
 void drawBoatLeft(float y, float angle){
 	glPushMatrix();
-	drawBoat(y, angle, hullLeft, 0, 0, 1);
+
+	glColor3f(0, 0, 1);
+
+	unturnBoatWorld();
+	drawHealth(0.0, healthLeft);
+	turnBoatWorld();
+
+	drawBoat(y, angle, hullLeft);
 
 	//Draw Cannon
 	glPushMatrix();
@@ -69,7 +96,14 @@ void drawBoatLeft(float y, float angle){
 
 void drawBoatRight(float y, float angle){
 	glPushMatrix();
-	drawBoat(y, angle, hullRight, 0, 1, 0);
+
+	glColor3f(0, 1, 0);
+
+	unturnBoatWorld();
+	drawHealth(0.08, healthRight);
+	turnBoatWorld();
+
+	drawBoat(y, angle, hullRight);
 
 	//Draw Cannon
 	glPushMatrix();

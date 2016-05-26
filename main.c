@@ -53,6 +53,7 @@ void display(){
 	turnWorld();
 	
 	drawAxis(1);
+
 	drawBoatLeft(getSineY(getLeftBoatX()), getSineDY(getLeftBoatX()));
 	drawBoatRight(getSineY(getRightBoatX()), getSineDY(getRightBoatX()));
 
