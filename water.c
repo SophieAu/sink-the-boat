@@ -68,18 +68,26 @@ void drawNormalsAndTangents(){
 
 		if (booleans[tangent] % 2 == 1){
     		glColor3f(0, 1, 0);
-	 		glBegin(GL_LINES);
- 			glVertex3f(x, y, 0);
-			glVertex3f(x + dx, y + dy, 0);
-     		glEnd();
+    		for(int j = sine.segments; j >= 0; j--){
+        		float z = sine.leftBorder + j * sine.stepSize;
+				glBegin(GL_LINES);
+ 				glVertex3f(x, y, z);
+				glVertex3f(x + dx, y + dy, z);
+     			glEnd();
+			}
+	 		
 		}
 
 		if (booleans[normal] % 2 == 1){
 	 		glColor3f(1, 0, 0);
-	 		glBegin(GL_LINES);
-	 		glVertex3f(x, y, 0);
-			glVertex3f(x - dy, y + dx, 0);
- 			glEnd();
+	 		for(int j = sine.segments; j >= 0; j--){
+        		float z = sine.leftBorder + j * sine.stepSize;
+			
+	 			glBegin(GL_LINES);
+	 			glVertex3f(x, y, z);
+				glVertex3f(x - dy, y + dx, z);
+ 				glEnd();
+ 			}
  		}
  	}
 }
