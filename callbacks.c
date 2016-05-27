@@ -34,7 +34,6 @@ void idle(){
 }
 
 
-
 void keyboard(unsigned char key, int x, int y){//x and y are the position of the mouse when key was pressed
 	switch(key){
 		//in- and decrease segment number

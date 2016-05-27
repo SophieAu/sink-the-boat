@@ -16,12 +16,10 @@
 
 
 void drawAxis(float length){
-
-
 	glBegin(GL_LINES);
     // X
-   glColor3f(1, 0, 0);
-   glVertex3f(0, 0, 0);
+	glColor3f(1, 0, 0);
+	glVertex3f(0, 0, 0);
     glVertex3f(length, 0, 0);
     //Y
     glColor3f(0, 1, 0);
@@ -35,37 +33,40 @@ void drawAxis(float length){
     glEnd();
 }
 
-void init(){
-	globalSegments = 50;
-	waterInit();
-}
 
-void turnWorld(){
-	glRotatef(45, 1.0, 0, 0);
-	glRotatef(-45, 0, 1.0, 0);	
-}
+// typedef struct { int frames;
+// 	float frameRate, frameRateInterval, lastFrameRateT
+// 	} Fps;
+
+
 
 void display(){
 	int errorCode;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 
 	glPushMatrix();
-	turnWorld();
-	
+	glRotatef(-45, 1.0, 0, 0);
+	glRotatef(-45, 0, 1.0, 0);	
 	drawAxis(1);
-
-	drawBoatLeft(getSineY(getLeftBoatX()), getSineDY(getLeftBoatX()));
-	drawBoatRight(getSineY(getRightBoatX()), getSineDY(getRightBoatX()));
 
 	glPushMatrix();
 	drawWater();
 	glPopMatrix();
+
+	drawBoatLeft(getSineY(getLeftBoatX()), getSineDY(getLeftBoatX()));
+	drawBoatRight(getSineY(getRightBoatX()), getSineDY(getRightBoatX()));
 	
 	glPopMatrix();
 
 	glutSwapBuffers();
 	if ((errorCode = glGetError()) != GL_NO_ERROR)
 		printf("display: %i %s\n",errorCode, gluErrorString(errorCode));
+}
+
+void init(){
+	globalSegments = 50;
+	waterInit();
 }
 
 int main(int argc, char **argv){

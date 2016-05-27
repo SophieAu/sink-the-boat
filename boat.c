@@ -22,7 +22,7 @@ void turnBoatWorld(){
 
 void unturnBoatWorld(){
 	glRotatef(45, 0, 1.0, 0);
-	glRotatef(-45, 1.0, 0, 0);	
+	glRotatef(45, 1.0, 0, 0);	
 }
 
 void drawHealth(float yOffset, int health){
@@ -78,10 +78,10 @@ void drawBoatLeft(float y, float angle){
 	glPushMatrix();
 
 	glColor3f(0, 0, 1);
-
+	glPushMatrix();
 	unturnBoatWorld();
 	drawHealth(0.0, healthLeft);
-	turnBoatWorld();
+	glPopMatrix();
 
 	drawBoat(y, angle, hullLeft);
 
@@ -99,9 +99,10 @@ void drawBoatRight(float y, float angle){
 
 	glColor3f(0, 1, 0);
 
+	glPushMatrix();
 	unturnBoatWorld();
 	drawHealth(0.08, healthRight);
-	turnBoatWorld();
+	glPopMatrix();
 
 	drawBoat(y, angle, hullRight);
 
