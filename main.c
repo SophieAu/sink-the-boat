@@ -34,10 +34,6 @@ void drawAxis(float length){
 }
 
 
-// typedef struct { int frames;
-// 	float frameRate, frameRateInterval, lastFrameRateT
-// 	} Fps;
-
 
 
 void display(){
@@ -58,6 +54,9 @@ void display(){
 	drawBoatRight(getSineY(getRightBoatX()), getSineDY(getRightBoatX()));
 	
 	glPopMatrix();
+
+	drawOSD();
+	fps.frames++;
 
 	glutSwapBuffers();
 	if ((errorCode = glGetError()) != GL_NO_ERROR)

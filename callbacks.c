@@ -17,11 +17,77 @@ float waitTime = 0.0;
 int animationBool = 0;
 
 
+void drawOSD()
+{
+  char buffer[30];
+  char *bufp;
+  int w, h;
+    
+  glPushAttrib(GL_ENABLE_BIT | GL_CURRENT_BIT);
+  glDisable(GL_DEPTH_TEST);
+  glDisable(GL_LIGHTING);
+
+  glMatrixMode(GL_PROJECTION);
+  glPushMatrix();
+  glLoadIdentity();
+
+  /* Set up orthographic coordinate system to match the 
+     window, i.e. (0,0)-(w,h) */
+  w = glutGet(GLUT_WINDOW_WIDTH);
+  h = glutGet(GLUT_WINDOW_HEIGHT);
+  glOrtho(0.0, w, 0.0, h, -1.0, 1.0);
+
+  glMatrixMode(GL_MODELVIEW);
+  glPushMatrix();
+  glLoadIdentity();
+
+  /* Frame rate */
+  glColor3f(1.0, 1.0, 0.0);
+  glRasterPos2i(10, 60);
+  snprintf(buffer, sizeof buffer, "fr (f/s): %6.0f", fps.frameRate);
+  for (bufp = buffer; *bufp; bufp++)
+    glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *bufp);
+
+  /* Time per frame */
+  glColor3f(1.0, 1.0, 0.0);
+  glRasterPos2i(10, 40);
+  snprintf(buffer, sizeof buffer, "ft (ms/f): %5.0f", 1.0 / fps.frameRate * 1000.0);
+  for (bufp = buffer; *bufp; bufp++)
+    glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *bufp);
+
+  /* Pop modelview */
+  glPopMatrix();  
+  glMatrixMode(GL_PROJECTION);
+
+  /* Pop projection */
+  glPopMatrix();  
+  glMatrixMode(GL_MODELVIEW);
+
+  /* Pop attributes */
+  glPopAttrib();
+}
+
+
 void animationSpeed(){
 	time.t = glutGet(GLUT_ELAPSED_TIME) - waitTime;
 	time.t /= 1000.0; //convert from ms to s
 	time.deltat = time.t - time.previoust;
 	time.previoust = time.t;
+}
+
+// typedef struct { int frames;
+// 	float frameRate, frameRateInterval, lastFrameRateT
+// 	} Fps;
+
+
+void frameRate(){
+	fps.frameRateInterval = 0.3;
+	time.deltat = time.t - fps.lastFrameRateT;
+	if(time.deltat > fps.frameRateInterval){
+		fps.frameRate = fps.frames / time.deltat;
+		fps.lastFrameRateT = time.t;
+		fps.frames = 0;
+	}
 }
 
 void idle(){
@@ -30,6 +96,8 @@ void idle(){
 	else
 		waitTime = glutGet(GLUT_ELAPSED_TIME) - (staticTime*1000);
 	
+	frameRate();
+
 	glutPostRedisplay();
 }
 
