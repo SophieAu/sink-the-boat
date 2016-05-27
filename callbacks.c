@@ -202,7 +202,8 @@ void specialKeys(int key, int x, int y){
     	//transparency
     	break;
 		case GLUT_KEY_F3:
-		//lights on/off
+		toggleLights();
+		glutSwapBuffers();
     	break;
 		case GLUT_KEY_F4:
 		toggleNormal();

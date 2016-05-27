@@ -114,6 +114,10 @@ void lighting(){
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+
+	GLfloat cyan[] = {0.0f, 1.8f, 1.8f, 1.0f};
+	glMaterialfv(GL_FRONT, GL_AMBIENT, cyan);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, cyan);
 }
 
 
@@ -123,17 +127,14 @@ void drawWater(){
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    
- 	lighting();
-
-	GLfloat cyan[] = {0.0f, 1.8f, 1.8f, 1.0f};
-	glMaterialfv(GL_FRONT, GL_AMBIENT, cyan);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, cyan);
-	
 
 	glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glColor4f(0, 1, 1, 0.5);
+
+    if (booleans[lights] % 2 == 0)
+    	lighting();
+    else
+    	glColor4f(0, 1.0, 1.0, 0.8);
 
     for(int i = 0; i <= sine.segments-1; i++){
 	glBegin(GL_QUAD_STRIP);
@@ -153,7 +154,8 @@ void drawWater(){
 	glEnd();
 	}
     
-	glDisable(GL_LIGHTING);
+    if (booleans[lights] % 2 == 0)
+    	glDisable(GL_LIGHTING);
 	glDisable(GL_BLEND);
     drawNormalsAndTangents();
 }
