@@ -68,7 +68,7 @@ void drawNormalsAndTangents(){
 
 		if (booleans[tangent] % 2 == 1){
     		glColor3f(0, 1, 0);
-    		for(int j = sine.segments; j >= 0; j--){
+    		for(int j = 0; j <= sine.segments; j++){
         		float z = sine.leftBorder + j * sine.stepSize;
 				glBegin(GL_LINES);
  				glVertex3f(x, y, z);
@@ -126,7 +126,7 @@ void drawWater(){
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glColor4f(0, 1, 1, 0.5);
 
-    for(int i = 0; i <= sine.segments; i++){
+    for(int i = 0; i <= sine.segments-1; i++){
 	glBegin(GL_QUAD_STRIP);
 
    		float leftX = sine.leftBorder + i * sine.stepSize;

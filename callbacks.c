@@ -75,11 +75,6 @@ void animationSpeed(){
 	time.previoust = time.t;
 }
 
-// typedef struct { int frames;
-// 	float frameRate, frameRateInterval, lastFrameRateT
-// 	} Fps;
-
-
 void frameRate(){
 	fps.frameRateInterval = 0.3;
 	time.deltat = time.t - fps.lastFrameRateT;
