@@ -13,8 +13,8 @@
 const double omega = PI/4;
 const double k = 2*PI / 0.5;
 
-enum { wireFrame, tangent, normal, nBools } Bools;
-int booleans[nBools] = { 0, 0, 0 };
+enum { wireFrame, tangent, normal, transparency, lights, nBools } Bools;
+int booleans[nBools] = { 0, 0, 0, 0, 0 };
 
 
 typedef struct { float leftBorder, rightBorder, range, stepSize, amplitude;
@@ -46,6 +46,15 @@ void toggleNormal(){
 void toggleTangent(){
 	booleans[tangent]++;
 }
+
+void toggleTransparency(){
+	booleans[transparency]++;
+}
+
+void toggleLights(){
+	booleans[lights]++;
+}
+
 
 float getSineY(float x){
 	return sine.amplitude * sinf(k * x + omega * time.t);

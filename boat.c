@@ -137,13 +137,13 @@ void turnLeftCannonLeft(){
 		jointPositions[cannonLeft] = -90;
 }
 
-void moveLeftBoatRight(){
+void moveLeftBoatForward(){
 	jointPositions[hullLeft] += increment[hullLeft];
 	if (jointPositions[hullLeft] > 1)
 		jointPositions[hullLeft] = 1;
 }
 
-void moveLeftBoatLeft(){
+void moveLeftBoatBack(){
 	jointPositions[hullLeft] -= increment[hullLeft];
 	if (jointPositions[hullLeft] < -1)
 		jointPositions[hullLeft] = -1;
@@ -161,13 +161,13 @@ void turnRightCannonLeft(){
 		jointPositions[cannonRight] = 90;
 }
 
-void moveRightBoatRight(){
+void moveRightBoatBack(){
 	jointPositions[hullRight] += increment[hullRight];
 	if (jointPositions[hullRight] > 1)
 		jointPositions[hullRight] = 1;
 }
 
-void moveRightBoatLeft(){
+void moveRightBoatForward(){
 	jointPositions[hullRight] -= increment[hullRight];
 	if (jointPositions[hullRight] < -1)
 		jointPositions[hullRight] = -1;
@@ -178,5 +178,21 @@ void shootLeftBoat(){
 }
 
 void shootRightBoat(){
+
+}
+
+
+
+void turnLeftBoatLeft(){
+
+}
+void turnLeftBoatRight(){
+
+}
+
+void turnRightBoatRight(){
+
+}
+void turnRightBoatLeft(){
 
 }

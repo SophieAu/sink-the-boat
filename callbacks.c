@@ -124,15 +124,19 @@ void keyboard(unsigned char key, int x, int y){//x and y are the position of the
 		break;
 
 		case 'w':
+		moveLeftBoatForward();
+		glutSwapBuffers();
 		break;
 		case 'a':
-		moveLeftBoatLeft();
+		turnLeftBoatLeft();
 		glutSwapBuffers();
 		break;
 		case 's':
+		moveLeftBoatBack();
+		glutSwapBuffers();
 		break;
 		case 'd':
-		moveLeftBoatRight();
+		turnLeftBoatRight();
 		glutSwapBuffers();
 		break;
 		case 'q':
@@ -164,16 +168,20 @@ void specialKeys(int key, int x, int y){
 	switch(key){
 		//"Right" Boat Controls
 		case GLUT_KEY_LEFT:
-		moveRightBoatLeft();
+		turnRightBoatLeft();
 		glutSwapBuffers();
 		break;
 		case GLUT_KEY_UP:
+		moveRightBoatForward();
+		glutSwapBuffers();
 		break;
-		case GLUT_KEY_RIGHT: 
-		moveRightBoatRight();
+		case GLUT_KEY_RIGHT:
+		turnRightBoatLeft();
 		glutSwapBuffers();
 		break;
 		case GLUT_KEY_DOWN:
+		moveRightBoatBack();
+		glutSwapBuffers();
 		break;
 		case GLUT_KEY_PAGE_UP:
 	    turnRightCannonRight();
