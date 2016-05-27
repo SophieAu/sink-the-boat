@@ -99,7 +99,7 @@ void idle(){
 
 void keyboard(unsigned char key, int x, int y){//x and y are the position of the mouse when key was pressed
 	switch(key){
-		//in- and decrease segment number
+		//Tesselation
 		case '+':
 		globalSegments *= 2;
 		resetSegments();
@@ -107,58 +107,51 @@ void keyboard(unsigned char key, int x, int y){//x and y are the position of the
 		break;
 		case '-':
 		globalSegments /= 2;
-		if(globalSegments < 4) // using 4 as anything smaller doesn't make much sense
+		if(globalSegments < 4)
 			globalSegments = 4;
 		resetSegments();
 		glutSwapBuffers();
 		break;
 
 		case '\'':
-		animationBool++;
-		staticTime = time.t;
 		break;
 
 		case 'p':
-		toggleWireFrame();
-		glutSwapBuffers();
 		break;
 		case 'n':
-		toggleNormal();
-		glutSwapBuffers();
 		break;
 		case 't':
-		toggleTangent();
-		glutSwapBuffers();
 		break;
 
 		case 'w':
-		turnLeftCannonLeft();
-		glutSwapBuffers();
 		break;
 		case 'a':
 		moveLeftBoatLeft();
 		glutSwapBuffers();
 		break;
 		case 's':
-		turnLeftCannonRight();
-		glutSwapBuffers();
 		break;
 		case 'd':
 		moveLeftBoatRight();
 		glutSwapBuffers();
 		break;
+		case 'q':
+		turnLeftCannonRight();
+		glutSwapBuffers();
+		break;
+		case 'r':
+		turnLeftCannonLeft();
+		glutSwapBuffers();
+		break;
 
-		case 32:
+		case 32: //Space
 		shootLeftBoat();
 		break;
-		case 13:
+		case 13: //Enter
 		shootRightBoat();
 		break;
 
-		case'q':
-		exit(0);
-		break;
-		case 27:
+		case 27: //Esc
 		exit(0);
 		break;
 
@@ -167,25 +160,74 @@ void keyboard(unsigned char key, int x, int y){//x and y are the position of the
 	}
 }
 
-void arrowKeys(int key, int x, int y){
+void specialKeys(int key, int x, int y){
 	switch(key){
+		//"Right" Boat Controls
 		case GLUT_KEY_LEFT:
 		moveRightBoatLeft();
 		glutSwapBuffers();
 		break;
 		case GLUT_KEY_UP:
-		turnRightCannonRight();
-		glutSwapBuffers();
 		break;
 		case GLUT_KEY_RIGHT: 
 		moveRightBoatRight();
 		glutSwapBuffers();
 		break;
 		case GLUT_KEY_DOWN:
-		turnRightCannonLeft();
+		break;
+		case GLUT_KEY_PAGE_UP:
+	    turnRightCannonRight();
+		glutSwapBuffers();
+	    break;
+		case GLUT_KEY_PAGE_DOWN:
+	    turnRightCannonLeft();
 		glutSwapBuffers();
 		break;
 
+
+		//Rendering Controls
+		case GLUT_KEY_F1:
+		toggleWireFrame();
+		glutSwapBuffers();
+		break;
+		case GLUT_KEY_F2:
+    	//transparency
+    	break;
+		case GLUT_KEY_F3:
+		//lights on/off
+    	break;
+		case GLUT_KEY_F4:
+		toggleNormal();
+		glutSwapBuffers();
+	 	break;
+		case GLUT_KEY_F5:
+	    toggleTangent();
+		glutSwapBuffers();
+	    break;
+		case GLUT_KEY_F6:
+	    animationBool++;
+		staticTime = time.t;
+	    break;
+	    /* unused F keys
+		case GLUT_KEY_F7:
+	    F7 function key.
+	    break;
+		case GLUT_KEY_F8:
+	    F8 function key. 
+	    break;
+		case GLUT_KEY_F9:
+	    F9 function key. 
+	    break;
+		case GLUT_KEY_F10:
+	    F10 function key. 
+	    break;
+		case GLUT_KEY_F11:
+	    F11 function key. 
+	    break;
+		case GLUT_KEY_F12:
+	    F12 function key. 
+	    break;
+	    */
 		default:
 		break;
 	}

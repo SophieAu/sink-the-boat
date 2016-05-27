@@ -77,7 +77,7 @@ int main(int argc, char **argv){
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
 	glutKeyboardFunc(keyboard);
-	glutSpecialFunc(arrowKeys);
+	glutSpecialFunc(specialKeys);
 	init();
 
 	glutMainLoop();
