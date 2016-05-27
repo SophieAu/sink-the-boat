@@ -8,9 +8,9 @@
 
 #define PI 3.141592653589
 
-typedef enum { hullLeft, cannonLeft, hullRight, cannonRight, nJoints } Joint;
-float increment[nJoints] = {0.01, 1.0, 0.01, -1.0};
-float jointPositions[nJoints] = {-0.4, 0.0, 0.4, 0.0};
+typedef enum { hullLeft, cannonLeft, hullRight, cannonRight, rotationLeft, rotationRight, nJoints } Joint;
+float increment[nJoints] = {0.01, 1.0, 0.01, -1.0, 1.0, 1.0};
+float jointPositions[nJoints] = {-0.4, 0.0, 0.4, 0.0, 0.0, 0.0};
 int healthLeft = 10;
 int healthRight = 10;
 
@@ -35,12 +35,13 @@ void drawHealth(float yOffset, int health){
 	glEnd();
 }
 
-void drawBoat(float y, float angle, Joint hull){
+void drawBoat(float y, float angle, Joint hull, Joint rotation){
 	angle = atan(angle)*180/PI;
 	
 	glTranslatef(jointPositions[hull], y, 0.0);
 	glRotatef(angle, 0, 0, 1.0);
 	glScalef(0.2, 0.2, 0.2);
+	glRotatef(jointPositions[rotation], 0.0, 1.0, 0.0);
 
 	//Hull
 	glBegin(GL_POLYGON);
@@ -83,7 +84,7 @@ void drawBoatLeft(float y, float angle){
 	drawHealth(0.0, healthLeft);
 	glPopMatrix();
 
-	drawBoat(y, angle, hullLeft);
+	drawBoat(y, angle, hullLeft, rotationLeft);
 
 	//Draw Cannon
 	glPushMatrix();
@@ -104,7 +105,7 @@ void drawBoatRight(float y, float angle){
 	drawHealth(0.08, healthRight);
 	glPopMatrix();
 
-	drawBoat(y, angle, hullRight);
+	drawBoat(y, angle, hullRight, rotationRight);
 
 	//Draw Cannon
 	glPushMatrix();
@@ -184,15 +185,16 @@ void shootRightBoat(){
 
 
 void turnLeftBoatLeft(){
-
+	jointPositions[rotationLeft] += increment[rotationLeft];
 }
-void turnLeftBoatRight(){
 
+void turnLeftBoatRight(){
+	jointPositions[rotationLeft] -= increment[rotationLeft];
 }
 
 void turnRightBoatRight(){
-
+	jointPositions[rotationRight] += increment[rotationRight];
 }
 void turnRightBoatLeft(){
-
+	jointPositions[rotationRight] += increment[rotationRight];
 }
