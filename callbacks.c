@@ -12,13 +12,16 @@
 #include "boat.h"
 #include "globalvariables.h"
 
+
+
+//time-related functions and variables
 float staticTime = 0.0;
 float waitTime = 0.0;
 int animationBool = 0;
 
-
-void drawOSD()
-{
+/*displaying the frame rate etc. this function was completely taken from the tutorial about
+projectile motion and only the fps variables were modified*/
+void drawOSD(){
   char buffer[30];
   char *bufp;
   int w, h;
@@ -68,14 +71,14 @@ void drawOSD()
 }
 
 
-void animationSpeed(){
+void animationSpeed(){ //time elapsed since the last call of this function
 	time.t = glutGet(GLUT_ELAPSED_TIME) - waitTime;
 	time.t /= 1000.0; //convert from ms to s
 	time.deltat = time.t - time.previoust;
 	time.previoust = time.t;
 }
 
-void frameRate(){
+void frameRate(){ // calculation of the frame rate
 	fps.frameRateInterval = 0.3;
 	time.deltat = time.t - fps.lastFrameRateT;
 	if(time.deltat > fps.frameRateInterval){
@@ -113,16 +116,7 @@ void keyboard(unsigned char key, int x, int y){//x and y are the position of the
 		glutSwapBuffers();
 		break;
 
-		case '\'':
-		break;
-
-		case 'p':
-		break;
-		case 'n':
-		break;
-		case 't':
-		break;
-
+		//Boat movement (mostly left boaz)
 		case 'w':
 		moveLeftBoatForward();
 		glutSwapBuffers();
@@ -155,6 +149,7 @@ void keyboard(unsigned char key, int x, int y){//x and y are the position of the
 		shootRightBoat();
 		break;
 
+		//Exiting the game
 		case 27: //Esc
 		exit(0);
 		break;
@@ -218,7 +213,7 @@ void specialKeys(int key, int x, int y){
 	    animationBool++;
 		staticTime = time.t;
 	    break;
-	    /* unused F keys
+	    /* unused F keys, kept for convenience in case they were needed in the future
 		case GLUT_KEY_F7:
 	    F7 function key.
 	    break;
