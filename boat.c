@@ -40,8 +40,8 @@ void drawBoat(float y, float angle, Joint hull, Joint rotation){
 	
 	glTranslatef(jointPositions[hull], y, 0.0);
 	glRotatef(angle, 0, 0, 1.0);
-	glScalef(0.2, 0.2, 0.2);
 	glRotatef(jointPositions[rotation], 0.0, 1.0, 0.0);
+	glScalef(0.2, 0.2, 0.2);
 
 	//Hull
 	glBegin(GL_POLYGON);
