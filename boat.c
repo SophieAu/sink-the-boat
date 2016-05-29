@@ -8,9 +8,9 @@
 
 #define PI 3.141592653589
 
-typedef enum { hullLeft, cannonLeft, hullRight, cannonRight, rotationLeft, rotationRight, nJoints } Joint;
-float increment[nJoints] = {0.01, 1.0, 0.01, -1.0, 1.0, 1.0};
-float jointPositions[nJoints] = {-0.4, 0.0, 0.4, 0.0, 0.0, 0.0};
+typedef enum { hullLeftX, hullLeftZ, cannonLeft, hullRightX, hullRightZ, cannonRight, rotationLeft, rotationRight, nJoints } Joint;
+float increment[nJoints] = {0.01, 0.01, 1.0, 0.01, 0.01, -1.0, 1.0, 1.0};
+float jointPositions[nJoints] = {-0.4, 0.0, 0.0, 0.4, 0.0, 0.0, 0.0, 0.0};
 int healthLeft = 10;
 int healthRight = 10;
 
@@ -35,11 +35,10 @@ void drawHealth(float yOffset, int health){
 	glEnd();
 }
 
-void drawBoat(float y, float angle, Joint hull, Joint rotation){
+void drawBoat(float y, float angle, Joint hullX, Joint hullZ, Joint rotation){
 	angle = atan(angle)*180/PI;
 	
-	printf("cos rot: %f\n", cosf(jointPositions[rotation]));
-	glTranslatef(jointPositions[hull]*cosf(jointPositions[rotation]*PI/180), y, jointPositions[hull]*sinf(jointPositions[rotation]*PI/180));
+	glTranslatef(jointPositions[hullX], y, jointPositions[hullZ]);
 	glRotatef(angle, 0, 0, 1.0);
 	glRotatef(jointPositions[rotation], 0.0, 1.0, 0.0);
 	glScalef(0.2, 0.2, 0.2);
@@ -85,8 +84,8 @@ void drawBoatLeft(float y, float angle){
 	drawHealth(0.0, healthLeft);
 	glPopMatrix();
 
-	drawBoat(y, angle, hullLeft, rotationLeft);
-
+	drawBoat(y, angle, hullLeftX, hullLeftZ, rotationLeft);
+	
 	//Draw Cannon
 	glPushMatrix();
 	glTranslatef(0.5, 0.25, 0.0);
@@ -106,8 +105,8 @@ void drawBoatRight(float y, float angle){
 	drawHealth(0.08, healthRight);
 	glPopMatrix();
 
-	drawBoat(y, angle, hullRight, rotationRight);
-
+	drawBoat(y, angle, hullRightX, hullRightZ, rotationRight);
+	
 	//Draw Cannon
 	glPushMatrix();
 	glTranslatef(-0.5, 0.25, 0.0);
@@ -118,11 +117,11 @@ void drawBoatRight(float y, float angle){
 }
 
 float getLeftBoatX(){
-	return jointPositions[hullLeft]*cosf(jointPositions[rotationLeft]*PI/180);
+	return jointPositions[hullLeftX];
 }
 
 float getRightBoatX(){
-	return jointPositions[hullRight]*cosf(jointPositions[rotationRight]*PI/180);
+	return jointPositions[hullRightX];
 }
 
 
@@ -140,15 +139,21 @@ void turnLeftCannonLeft(){
 }
 
 void moveLeftBoatForward(){
-	jointPositions[hullLeft] += increment[hullLeft];
-	if (jointPositions[hullLeft] > 1)
-		jointPositions[hullLeft] = 1;
+	jointPositions[hullLeftX] += increment[hullLeftX]*cosf(jointPositions[rotationLeft]*PI/180);
+	if (jointPositions[hullLeftX] > 1)
+		jointPositions[hullLeftX] = 1;
+	jointPositions[hullLeftZ] += increment[hullLeftZ]*sinf(jointPositions[rotationLeft]*PI/180);
+	if (jointPositions[hullLeftZ] > 1)
+		jointPositions[hullLeftZ] = 1;
 }
 
 void moveLeftBoatBack(){
-	jointPositions[hullLeft] -= increment[hullLeft];
-	if (jointPositions[hullLeft] < -1)
-		jointPositions[hullLeft] = -1;
+	jointPositions[hullLeftX] -= increment[hullLeftX]*cosf(jointPositions[rotationLeft]*PI/180);
+	if (jointPositions[hullLeftX] < -1)
+		jointPositions[hullLeftX] = -1;
+	jointPositions[hullLeftZ] -= increment[hullLeftZ]*sinf(jointPositions[rotationLeft]*PI/180);
+	if (jointPositions[hullLeftZ] < -1)
+		jointPositions[hullLeftZ] = -1;
 }
 
 void turnRightCannonRight(){
@@ -164,15 +169,27 @@ void turnRightCannonLeft(){
 }
 
 void moveRightBoatBack(){
-	jointPositions[hullRight] += increment[hullRight];
-	if (jointPositions[hullRight] > 1)
-		jointPositions[hullRight] = 1;
+	jointPositions[hullRightX] += increment[hullRightX]*cosf(jointPositions[rotationRight]*PI/180);
+	if (jointPositions[hullRightX] > 1)
+		jointPositions[hullRightX] = 1;
+	jointPositions[hullRightZ] += increment[hullRightZ]*sinf(jointPositions[rotationRight]*PI/180);
+	if (jointPositions[hullRightZ] > 1)
+		jointPositions[hullRightZ] = 1;
+	printf("X: %f\n", jointPositions[hullRightX]);
+	printf("Z: %f\n", jointPositions[hullRightZ]);
+	
 }
 
 void moveRightBoatForward(){
-	jointPositions[hullRight] -= increment[hullRight];
-	if (jointPositions[hullRight] < -1)
-		jointPositions[hullRight] = -1;
+	jointPositions[hullRightX] -= increment[hullRightX]*cosf(jointPositions[rotationRight]*PI/180);
+	if (jointPositions[hullRightX] < -1)
+		jointPositions[hullRightX] = -1;
+	jointPositions[hullRightZ] -= increment[hullRightZ]*sinf(jointPositions[rotationRight]*PI/180);
+	if (jointPositions[hullRightZ] < -1)
+		jointPositions[hullRightZ] = -1;
+	printf("X: %f\n", jointPositions[hullRightX]);
+	printf("Z: %f\n", jointPositions[hullRightZ]);
+	
 }
 
 void shootLeftBoat(){
@@ -185,17 +202,25 @@ void shootRightBoat(){
 
 
 
-void turnLeftBoatLeft(){
+void turnLeftBoatLeft(){ // "adding" degrees
 	jointPositions[rotationLeft] += increment[rotationLeft];
+	if(jointPositions[rotationLeft]>=360)
+		jointPositions[rotationLeft] -=360;
 }
 
-void turnLeftBoatRight(){
+void turnLeftBoatRight(){ // "subtracting" degrees
 	jointPositions[rotationLeft] -= increment[rotationLeft];
+	if(jointPositions[rotationLeft]<0)
+		jointPositions[rotationLeft] += 360;
 }
 
-void turnRightBoatRight(){
+void turnRightBoatRight(){ // "adding" degrees
 	jointPositions[rotationRight] += increment[rotationRight];
+	if(jointPositions[rotationRight]>=360)
+		jointPositions[rotationRight] -=360;
 }
-void turnRightBoatLeft(){
+void turnRightBoatLeft(){ // "subtracting" degrees
 	jointPositions[rotationRight] += increment[rotationRight];
+	if(jointPositions[rotationRight]<0)
+		jointPositions[rotationRight] +=360;
 }
