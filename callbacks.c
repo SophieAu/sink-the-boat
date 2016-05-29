@@ -176,7 +176,7 @@ void specialKeys(int key, int x, int y){
 		glutSwapBuffers();
 		break;
 		case GLUT_KEY_RIGHT:
-		turnRightBoatLeft();
+		turnRightBoatRight();
 		glutSwapBuffers();
 		break;
 		case GLUT_KEY_DOWN:
