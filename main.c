@@ -33,23 +33,17 @@ void drawAxis(float length){
     glEnd();
 }
 
-
-
-
 void display(){
 	int errorCode;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-
 	glPushMatrix();
+
 	glRotatef(-45, 1.0, 0, 0);
 	glRotatef(-45, 0, 1.0, 0);	
+
 	drawAxis(1);
-
-	glPushMatrix();
 	drawWater();
-	glPopMatrix();
-
 	drawBoatLeft(getSineY(getLeftBoatX()), getSineDY(getLeftBoatX()));
 	drawBoatRight(getSineY(getRightBoatX()), getSineDY(getRightBoatX()));
 	

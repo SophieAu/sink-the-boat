@@ -125,6 +125,7 @@ void lighting(){
 
 
 void drawWater(){
+	glPushMatrix();
 	if (booleans[wireFrame] % 2 == 1)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
@@ -165,4 +166,5 @@ void drawWater(){
     	glDisable(GL_LIGHTING);
 	glDisable(GL_BLEND);
     drawNormalsAndTangents();
+    glPopMatrix();
 }
