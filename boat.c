@@ -38,7 +38,8 @@ void drawHealth(float yOffset, int health){
 void drawBoat(float y, float angle, Joint hull, Joint rotation){
 	angle = atan(angle)*180/PI;
 	
-	glTranslatef(jointPositions[hull], y, 0.0);
+	printf("cos rot: %f\n", cosf(jointPositions[rotation]));
+	glTranslatef(jointPositions[hull]*cosf(jointPositions[rotation]*PI/180), y, jointPositions[hull]*sinf(jointPositions[rotation]*PI/180));
 	glRotatef(angle, 0, 0, 1.0);
 	glRotatef(jointPositions[rotation], 0.0, 1.0, 0.0);
 	glScalef(0.2, 0.2, 0.2);
@@ -117,11 +118,11 @@ void drawBoatRight(float y, float angle){
 }
 
 float getLeftBoatX(){
-	return jointPositions[hullLeft];
+	return jointPositions[hullLeft]*cosf(jointPositions[rotationLeft]*PI/180);
 }
 
 float getRightBoatX(){
-	return jointPositions[hullRight];
+	return jointPositions[hullRight]*cosf(jointPositions[rotationRight]*PI/180);
 }
 
 
