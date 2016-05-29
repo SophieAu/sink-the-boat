@@ -13,10 +13,66 @@
 const double omega = PI/4;
 const double k = 2*PI / 0.5;
 
-enum { wireFrame, tangent, normal, transparency, lights, nBools } Bools;
+//Variables and functions concerning the rendering effects of the water
+typedef enum { wireFrame, tangent, normal, transparency, lights, nBools } RenderBools;
 int booleans[nBools] = { 0, 0, 0, 0, 0 };
 
+float alpha = 1.0; //the transparency "intensity" of the water, no transparency by default
 
+//Various rendering toggle functions
+void toggleWireFrame(){
+	booleans[wireFrame]++;
+		if (booleans[wireFrame] % 2 == 1) 
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+void toggleNormal(){
+	booleans[normal]++;
+}
+
+void toggleTangent(){
+	booleans[tangent]++;
+}
+
+void toggleTransparency(){
+	booleans[transparency]++;
+	if(booleans[transparency] % 2 == 0)
+		alpha = 1.0;
+	else
+		alpha = 0.2;
+}
+
+void toggleLights(){
+	booleans[lights]++;
+}
+
+
+void lighting(){
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_NORMALIZE);
+    
+    //this lighting combination keeps the requested cyan but makes it a bit darker and bluer
+    GLfloat light_position[] = {1.0f, 0.8f, 0.0f, 0.7f};
+	GLfloat light_ambient[] = {-0.1f, 0.1f, 0.1f, -0.5f};
+	GLfloat light_diffuse[] = {0.5f, 0.5f, 1.0f, 0.1f};
+
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+
+	//this is where the water is assigned its cyan colour
+	GLfloat cyan[] = {0.0f, 1.8f, 1.8f, alpha};
+	glMaterialfv(GL_FRONT, GL_AMBIENT, cyan);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, cyan);
+}
+
+
+
+
+//fuctions regarding the construction of the sine wave that represents the water
 typedef struct { float leftBorder, rightBorder, range, stepSize, amplitude;
 	int segments;
 	}SineWave;
@@ -35,27 +91,6 @@ void waterInit(){
 	resetSegments();
 }
 
-void toggleWireFrame(){
-	booleans[wireFrame]++;
-}
-
-void toggleNormal(){
-	booleans[normal]++;
-}
-
-void toggleTangent(){
-	booleans[tangent]++;
-}
-
-void toggleTransparency(){
-	booleans[transparency]++;
-}
-
-void toggleLights(){
-	booleans[lights]++;
-}
-
-
 float getSineY(float x){
 	return sine.amplitude * sinf(k * x + omega * time.t);
 }
@@ -65,18 +100,21 @@ float getSineDY(float x){
 }
 
 void drawNormalsAndTangents(){
+	//calculates the normal and tangent for each segment
 	for(int i = 0; i <= sine.segments; i++){
         float x = sine.leftBorder + i * sine.stepSize;
         float y = getSineY(x);
         float dx = 1;
         float dy = getSineDY(x);
 
+        //calculates the unit vector (vector of length 1)
 		float vLength = sqrt(pow(dx, 2) + pow(dy, 2));
 		dx /= vLength * 8;
       	dy /= vLength * 8;
 
+      	//draws the tangents
 		if (booleans[tangent] % 2 == 1){
-    		glColor3f(0, 1, 0);
+    		glColor3f(0, 1, 0); // green
     		for(int j = 0; j <= sine.segments; j++){
         		float z = sine.leftBorder + j * sine.stepSize;
 				glBegin(GL_LINES);
@@ -84,14 +122,13 @@ void drawNormalsAndTangents(){
 				glVertex3f(x + dx, y + dy, z);
      			glEnd();
 			}
-	 		
 		}
 
+		//draws the normals
 		if (booleans[normal] % 2 == 1){
-	 		glColor3f(1, 0, 0);
+	 		glColor3f(1, 0, 0); // red
 	 		for(int j = sine.segments; j >= 0; j--){
         		float z = sine.leftBorder + j * sine.stepSize;
-			
 	 			glBegin(GL_LINES);
 	 			glVertex3f(x, y, z);
 				glVertex3f(x - dy, y + dx, z);
@@ -101,41 +138,9 @@ void drawNormalsAndTangents(){
  	}
 }
 
-float alpha;
-
-void lighting(){
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_NORMALIZE);
-    
-    //this lighting combination keeps the requested cyan but makes it a bit darker and bluer
-    GLfloat light_position[] = {1.0f, 0.8f, 0.0f, 0.7f};
-	GLfloat light_ambient[] = {-0.1f, 0.1f, 0.1f, -0.5f};
-	GLfloat light_diffuse[] = {0.5f, 0.5f, 1.0f, 0.1f}; // the green is dampened, making the water blue-er
-
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-
-	GLfloat cyan[] = {0.0f, 1.8f, 1.8f, alpha};
-	glMaterialfv(GL_FRONT, GL_AMBIENT, cyan);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, cyan);
-}
-
-
 
 void drawWater(){
 	glPushMatrix();
-	if (booleans[wireFrame] % 2 == 1)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	else
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	if(booleans[transparency] % 2 == 0)
-		alpha = 1.0;
-	else
-		alpha = 0.2;
-
 	glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -144,22 +149,22 @@ void drawWater(){
     else
     	glColor4f(0, 1.0, 1.0, alpha);
 
+    //the waves consist of #sine.segments stripes of quad strips
     for(int i = 0; i <= sine.segments-1; i++){
-	glBegin(GL_QUAD_STRIP);
-
    		float leftX = sine.leftBorder + i * sine.stepSize;
     	float leftSineY = getSineY(leftX);
     	float rightX = sine.leftBorder + (i+1) * sine.stepSize;
 		float rightSineY = getSineY(rightX);
 
-        for(int j = sine.segments; j >= 0; j--){
+    	glBegin(GL_QUAD_STRIP);
+	    for(int j = sine.segments; j >= 0; j--){
         	float z = sine.leftBorder + j * sine.stepSize;
         	glNormal3f(1.0, getSineDY(leftX), 0.0);
 			glVertex3f(leftX, leftSineY, z);
         	glNormal3f(1.0, getSineDY(rightX), 0.0);
 			glVertex3f(rightX, rightSineY, z);
 		}
-	glEnd();
+		glEnd();
 	}
     
     if (booleans[lights] % 2 == 0)
