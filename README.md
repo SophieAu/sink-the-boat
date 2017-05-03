@@ -1,3 +1,5 @@
+# Sink the Boat
+
 A simple 2-player 3D game. The goal: Destroy the other ship.
 
 ## Installation
